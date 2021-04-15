@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PyramidTest {
 
@@ -30,5 +31,30 @@ public class PyramidTest {
         assertEquals(2, (int) p1.getSuperficialArea());
         assertEquals(15, (int) p2.getSuperficialArea());
         assertEquals(450, (int) p3.getSuperficialArea());
+    }
+    @Test
+    public void shouldNotCreatePyramidwithSidesandHeightNegative() {
+
+        try {
+            new Pyramid(-1,-1,1,2);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+
+        try {
+            new Pyramid(1,1,1,-2);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldNotCreatePyramidwithSidesandHeightZero() {
+
+        Exception e = assertThrows(ShapeException.class, () -> new Pyramid(1,1,1,0));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+
+        Exception e1 = assertThrows(ShapeException.class, () -> new Pyramid(0,0,0,1));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
     }
 }

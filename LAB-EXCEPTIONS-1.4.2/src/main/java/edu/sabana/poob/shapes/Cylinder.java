@@ -4,14 +4,16 @@ public class Cylinder extends Circle implements GeometricShape3D {
 
     private double height;
 
+    public Cylinder(double radius,double height) throws ShapeException {
+        super(radius);
+        if (radius <= 0|| height<=0)
+            throw new ShapeException(ShapeException.BAD_DIMENSION_SIDE);
+        this.height = height;
+    }
+
     public Cylinder() {
         super();
         this.height = 1;
-    }
-
-    public Cylinder(double radius, double height) throws ShapeException {
-        super(radius);
-        this.height = height;
     }
 
     public Cylinder(String color, double radius, double height) {

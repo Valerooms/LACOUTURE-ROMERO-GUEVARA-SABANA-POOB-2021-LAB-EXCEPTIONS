@@ -3,8 +3,7 @@ package edu.sabana.poob.shapes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CylinderTest {
 
@@ -64,5 +63,29 @@ public class CylinderTest {
         assertTrue(c1.toStringGeometricShape2D().contains("This is a Cylinder"));
         assertTrue(c2.toStringGeometricShape2D().contains("This is a Cylinder"));
         assertTrue(c3.toStringGeometricShape2D().contains("This is a Cylinder"));
+    }
+    @Test
+    public void shouldNotCreateCylinderWithRadiusandNegativeHeight() {
+
+        try {
+            new Cylinder(-1,1);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+        try {
+            new Cylinder(1,-1);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldNotCreateCylinderWithRadiusandZeroHeight() {
+
+        Exception e = assertThrows(ShapeException.class, () -> new Cylinder(1,0));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+
+        Exception e1 = assertThrows(ShapeException.class, () -> new Cylinder(0,1));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
     }
 }

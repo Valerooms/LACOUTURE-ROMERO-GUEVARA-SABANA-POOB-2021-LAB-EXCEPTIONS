@@ -2,7 +2,7 @@ package edu.sabana.poob.shapes;
 
 public abstract class Shape {
 
-    private String color;
+    protected String color;
 
     public Shape() {
 

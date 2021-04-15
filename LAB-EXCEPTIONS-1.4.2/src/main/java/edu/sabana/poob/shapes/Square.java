@@ -8,17 +8,19 @@ public class Square extends Rectangle{
 
     }
 
-    public Square(double width, double length) {
-        this.width = width;
-        this.length = length;
-
-    }
-
     public Square(String color, double width, double length) {
         super(color);
         this.width = width;
         this.length = length;
 
+    }
+    public Square (double width, double length) throws ShapeException {
+
+        if( width<=0|| length<=0){
+            throw new ShapeException(ShapeException.BAD_DIMENSION_SIDE);
+
+        }this.width = width;
+        this.length = length;
     }
     public Square(String color) {
         super(color);

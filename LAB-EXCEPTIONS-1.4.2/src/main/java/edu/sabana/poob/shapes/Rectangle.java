@@ -9,10 +9,11 @@ public class Rectangle extends Shape implements GeometricShape2D{
 
     }
 
-    public Rectangle(double width, double length) {
-        this.width = width;
-        this.length = length;
+    public Rectangle (double width, double length) throws ShapeException {
+        if( width<=0|| length<=0){
+            throw new ShapeException(ShapeException.BAD_DIMENSION_SIDE);
 
+        }
     }
 
     public Rectangle(String color, double width, double length) {

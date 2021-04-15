@@ -3,10 +3,8 @@ package edu.sabana.poob.shapes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TriangleTest {
 
@@ -25,7 +23,7 @@ public class TriangleTest {
 
     @Test
     public void ShouldCalculateArea(){
-        assertEquals((int)(50),(int)t1.getArea());
+        assertEquals((50),(int)t1.getArea());
         assertEquals((int)(8*Math.sqrt(2)),(int)t2.getArea());
         assertEquals((int)((1/4)*Math.sqrt(3)),(int)t3.getArea());
         assertEquals((int)((1/4)*Math.sqrt(3)),(int)t4.getArea());
@@ -62,5 +60,30 @@ public class TriangleTest {
         assertEquals("This is a Triangle with color NONE and sides 6, 4, 6", t2.toString());
         assertEquals("This is a Triangle with color Yellow and sides 1, 1, 1", t3.toString());
         assertEquals("This is a Triangle with color NONE and sides 1, 1, 1", t4.toString());
+    }
+    @Test
+    public void shouldNotCreateTrianglewithSidesandHeightNegative() {
+
+        try {
+            new Triangle(-1,-1,1,2);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+
+        try {
+            new Triangle(1,1,1,-2);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldNotCreateTrianglewithSidesandHeightZero() {
+
+        Exception e = assertThrows(ShapeException.class, () -> new Triangle(1,1,1,0));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+
+        Exception e1 = assertThrows(ShapeException.class, () -> new Triangle(0,0,0,1));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
     }
 }

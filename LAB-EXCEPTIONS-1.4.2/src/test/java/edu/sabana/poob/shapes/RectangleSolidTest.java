@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RectangleSolidTest {
     private static RectangleSolid rs1;
@@ -29,5 +30,37 @@ public class RectangleSolidTest {
         assertEquals(6, (int) rs1.getSuperficialArea());
         assertEquals(136, (int) rs2.getSuperficialArea());
         assertEquals(24, (int) rs3.getSuperficialArea());
+    }
+    @Test
+    public void shouldNotRectangleSolidwithSidesNegative() {
+
+        try {
+            new RectangleSolid(-1,1,1);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+
+        try {
+            new RectangleSolid(1,-1,1);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+        try {
+            new RectangleSolid(1,1,-1);
+        } catch (ShapeException e) {
+            assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldNotRectangleSolidwithSidesZero() {
+
+        Exception e = assertThrows(ShapeException.class, () -> new RectangleSolid(1,0,0));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        Exception e1 = assertThrows(ShapeException.class, () -> new RectangleSolid(0,1,1));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+        Exception e2 = assertThrows(ShapeException.class, () -> new RectangleSolid(0,0,1));
+        assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());
+
     }
 }

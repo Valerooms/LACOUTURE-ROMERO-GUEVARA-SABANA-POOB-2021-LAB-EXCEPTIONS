@@ -57,7 +57,7 @@ public class CircleTest {
         System.out.println(c1.toStringGeometricShape2D());
     }
     @Test
-    public void shouldNorCreateCircleWithRadiusNegative() {
+    public void shouldNotCreateCircleWithRadiusNegative() {
 
         try {
             new Circle(-1);
@@ -67,7 +67,7 @@ public class CircleTest {
     }
 
     @Test
-    public void shouldNorCreateCircleWithRadiusZero() {
+    public void shouldNotCreateCircleWithRadiusZero() {
 
         Exception e = assertThrows(ShapeException.class, () -> new Circle(0));
         assertEquals(ShapeException.BAD_DIMENSION_SIDE, e.getMessage());

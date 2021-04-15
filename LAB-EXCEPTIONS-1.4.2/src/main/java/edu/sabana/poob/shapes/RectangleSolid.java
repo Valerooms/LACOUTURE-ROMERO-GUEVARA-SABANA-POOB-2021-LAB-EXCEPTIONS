@@ -17,12 +17,18 @@ public class RectangleSolid extends Rectangle implements GeometricShape3D{
     public RectangleSolid() {
 
     }
-    public RectangleSolid(double height, double width, double length) {
+
+    public RectangleSolid (double height, double width, double length) throws ShapeException {
         super(height,width);
+        if( width<=0|| length<=0|| height<=0){
+            throw new ShapeException(ShapeException.BAD_DIMENSION_SIDE);
+
+        }
+
         this.height = height;
         this.width = width;
-        this.length = length;
-    }
+        this.length = length;}
+
     public RectangleSolid(String color)
     {
         super(color);
