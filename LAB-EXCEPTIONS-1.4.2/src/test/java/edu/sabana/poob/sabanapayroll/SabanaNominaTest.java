@@ -199,8 +199,7 @@ public class SabanaNominaTest
         Assertions.assertEquals(13000,sa1.calculateAllEmployeeBalance());
     }
     @Test
-    public void shouldAssigneFamilyCompensaiton()
-    {
+    public void shouldAssigneFamilyCompensaiton() throws FamilyCompensationFundException {
         SabanaPayroll sa1 = new SabanaPayroll();
         BankAccount b1;
         Checking c1 = new Checking();
@@ -217,9 +216,9 @@ public class SabanaNominaTest
         sa1.setDepartments(departments);
         c1.deposit(10000);
         s1.deposit(10000);
-        assertTrue(sa1.assigneFamilyCompensation("Colsubsidio",e1.getId()));
-        assertTrue(sa1.assigneFamilyCompensation("Compensar",e2.getId()));
-        assertTrue(sa1.assigneFamilyCompensation("Cafam",e3.getId()));
+        assertTrue(sa1.assigneFamilyCompensation("ColsubsidioFund",e1.getId()));
+        assertTrue(sa1.assigneFamilyCompensation("CompensarFund",e2.getId()));
+        assertTrue(sa1.assigneFamilyCompensation("CafamFund",e3.getId()));
 
     }
 

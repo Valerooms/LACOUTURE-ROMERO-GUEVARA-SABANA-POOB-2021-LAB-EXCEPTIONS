@@ -18,7 +18,7 @@ public class SabanaPayrollTest {
 
     private static List<Employee> employees;
     private static Department department;
-
+    private static List<Department> departments;
     private static EmployeeBySalary employeeBySalary;
     private static EmployeeByHours employeeByHours;
     private static EmployeeByComission employeeByCommission;
@@ -40,18 +40,24 @@ public class SabanaPayrollTest {
         employees.add(employeeByHours);
         employees.add(employeeByCommission);
 
+        departments= new ArrayList<>();
+        departments.add(department);
+
         sabanaPayroll = new SabanaPayroll(employees);
+        sabanaPayroll.setDepartments(departments);
+
+        department.setEmployees(employees);
     }
 
     @Test
-    public void assigneColsubsidioFamilyCompensation() {
+    public void assigneColsubsidioFamilyCompensation() throws FamilyCompensationFundException {
 
         boolean result = sabanaPayroll.assigneFamilyCompensation(ColsubsidioFund.class.getSimpleName(), employeeBySalary.getId());
         assertTrue(result);
     }
 
     @Test
-    public void assigneCompensarFamilyCompensation() {
+    public void assigneCompensarFamilyCompensation() throws FamilyCompensationFundException {
 
         boolean result = sabanaPayroll.assigneFamilyCompensation(CompensarFund.class.getSimpleName(), employeeBySalary.getId());
         assertTrue(result);

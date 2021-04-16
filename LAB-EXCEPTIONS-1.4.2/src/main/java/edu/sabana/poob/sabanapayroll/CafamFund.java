@@ -11,12 +11,14 @@ public class CafamFund implements IFamilyCompensationFund{
     public CafamFund(){}
 
     @Override
-    public boolean registerEmployee(Employee employee) {
+    public boolean registerEmployee(Employee employee) throws FamilyCompensationFundException{
         boolean amigo= false;
-        if(!(registeredEmployees.contains(employee.id))&& !(employee.getClass().getSimpleName().equals("EmployeeByHours"))){
-            amigo = true;
+        if(!(registeredEmployees.contains(employee.id)))
+        {   amigo = true;
             registeredEmployees.add(employee.id);}
-
+        if(employee.getClass().getSimpleName().equals("EmployeeByHours")){
+            throw new FamilyCompensationFundException(FamilyCompensationFundException.EMPLOYEE_NOT_ALLOWED);
+        }
         return amigo;
     }
 

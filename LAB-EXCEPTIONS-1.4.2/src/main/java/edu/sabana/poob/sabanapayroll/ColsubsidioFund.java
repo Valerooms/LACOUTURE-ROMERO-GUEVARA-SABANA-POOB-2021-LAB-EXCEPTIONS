@@ -20,22 +20,30 @@ public class ColsubsidioFund implements IFamilyCompensationFund {
      * @return
      */
     @Override
-    public boolean registerEmployee(Employee employee) {
+    public boolean registerEmployee(Employee employee) throws FamilyCompensationFundException {
         boolean amigo= false;
-        if(!(registeredEmployees.containsKey(employee.id))&& !(employee.getClass().getSimpleName().equals("EmployeeByComission"))){
-            amigo = true;
-            registeredEmployees.put(employee.id,employee);}
+        if(!(registeredEmployees.containsKey(employee.id)))
+        {   amigo = true;
+            registeredEmployees.put(employee.id, employee);}
 
-        return amigo;
+        if(!amigo){throw new FamilyCompensationFundException(FamilyCompensationFundException.EMPLOYEE_REGISTERED);}
+
+        if(employee.getClass().getSimpleName().equals("EmployeeByComission")){
+            throw new FamilyCompensationFundException(FamilyCompensationFundException.EMPLOYEE_NOT_ALLOWED);
+        }
+        return true;
     }
 
     @Override
-    public boolean deleteEmployee(UUID id) {
+    public boolean deleteEmployee(UUID id) throws FamilyCompensationFundException {
         boolean amigo = false;
         if(registeredEmployees.containsKey(id)){
             registeredEmployees.remove(id);
             amigo = true;
-        }return amigo;
+        }
+        else {throw new FamilyCompensationFundException(FamilyCompensationFundException.EMPLOYEE_IS_NOT_REGISTERED);
+        }
+        return amigo;
     }
 
     @Override
