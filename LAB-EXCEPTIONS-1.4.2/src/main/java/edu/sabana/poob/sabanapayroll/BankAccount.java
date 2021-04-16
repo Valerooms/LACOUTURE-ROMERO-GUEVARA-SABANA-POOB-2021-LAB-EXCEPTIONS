@@ -35,7 +35,7 @@ public abstract class BankAccount {
      * @param amount El monto a depositar.
      * @return Si la operación fue exitosa.
      */
-    public boolean deposit(double amount) {
+    public boolean deposit(double amount) throws BankAccountException{
         boolean result = false;
 
         if (amount>getDepositDiscount())
@@ -43,6 +43,11 @@ public abstract class BankAccount {
             result=true;
             this.balance=this.balance+amount-getDepositDiscount();
         }
+        else
+        {
+            throw new BankAccountException(BankAccountException.DINERO_INSUFICIENTE);
+        }
+
 
         return result;
     }

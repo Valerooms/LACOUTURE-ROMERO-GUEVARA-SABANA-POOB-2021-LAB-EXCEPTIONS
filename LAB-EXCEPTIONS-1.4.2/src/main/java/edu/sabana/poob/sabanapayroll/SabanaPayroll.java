@@ -91,8 +91,7 @@ public class SabanaPayroll
     {
         this.departments=depa;
     }
-    public boolean depositToEmployee(UUID employeeId, double amount)
-    {
+    public boolean depositToEmployee(UUID employeeId, double amount) throws BankAccountException {
         boolean result=false;
         for (Department d : this.departments)
         {
@@ -130,29 +129,34 @@ public class SabanaPayroll
     }
 
     public boolean assigneFamilyCompensation(String IFamilyCompensationFund, UUID employeeId) throws FamilyCompensationFundException {
-
+        Employee ee = null;
         boolean resutl = false;
         for (Department d : this.departments)
         {
             for (Employee e: d.getEmployees())
             {
-                if (IFamilyCompensationFund.equals("ColsubsidioFund"))
-                {
-                    colsubsidioFund.registerEmployee(e);
-                    resutl=true;
-                }
-                if (IFamilyCompensationFund.equals("CompensarFund"))
-                {
-                    compensarFund.registerEmployee(e);
-                    resutl=true;
-                }
-                if (IFamilyCompensationFund.equals("CafamFund"))
-                {
-                    cafamFund.registerEmployee(e);
-                    resutl=true;
-                }
 
+                if (e.getId().equals(employeeId))
+                {
+                    ee=e;
+                    break;
+                }
             }
+        }
+        if (IFamilyCompensationFund.equals("ColsubsidioFund"))
+        {
+            colsubsidioFund.registerEmployee(ee);
+            resutl=true;
+        }
+        if (IFamilyCompensationFund.equals("CompensarFund"))
+        {
+            compensarFund.registerEmployee(ee);
+            resutl=true;
+        }
+        if (IFamilyCompensationFund.equals("CafamFund"))
+        {
+            cafamFund.registerEmployee(ee);
+            resutl=true;
         }
         return resutl;
 

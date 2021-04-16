@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SabanaNominaTest
 {
@@ -119,8 +121,7 @@ public class SabanaNominaTest
         s1.printPayroll();
     }
     @Test
-    public void shouldCalculateEmployeeBalance()
-    {
+    public void shouldCalculateEmployeeBalance() throws BankAccountException {
         SabanaPayroll sa1 = new SabanaPayroll();
         BankAccount b1;
         Checking c1 = new Checking();
@@ -141,8 +142,7 @@ public class SabanaNominaTest
         Assertions.assertEquals(8000,sa1.calculateEmployeeBalance(e2.getId()));
     }
     @Test
-    public void shouldDepositToEmployee()
-    {
+    public void shouldDepositToEmployee() throws BankAccountException {
         SabanaPayroll sa1 = new SabanaPayroll();
         BankAccount b1;
         Checking c1 = new Checking();
@@ -160,8 +160,7 @@ public class SabanaNominaTest
         assertTrue(sa1.depositToEmployee(e2.getId(),3000));
     }
     @Test
-    public void shouldNotDepositToEmployee()
-    {
+    public void shouldNotDepositToEmployee() throws BankAccountException {
         SabanaPayroll sa1 = new SabanaPayroll();
         BankAccount b1;
         Checking c1 = new Checking();
@@ -175,12 +174,14 @@ public class SabanaNominaTest
         d1.setEmployees(employees);
         sa1.setDepartments(departments);
 
-        assertFalse(sa1.depositToEmployee(e1.getId(),5000));
-        assertFalse(sa1.depositToEmployee(e2.getId(),2000));
+        Exception e =assertThrows(BankAccountException.class,()-> sa1.depositToEmployee(e1.getId(),(5000)));
+        assertEquals(BankAccountException.DINERO_INSUFICIENTE, e.getMessage());
+        Exception ee =assertThrows(BankAccountException.class,()-> sa1.depositToEmployee(e2.getId(),(2000)));
+        assertEquals(BankAccountException.DINERO_INSUFICIENTE, e.getMessage());
+
     }
     @Test
-    public void shouldCalculateAllEmployeesBalance()
-    {
+    public void shouldCalculateAllEmployeesBalance() throws BankAccountException {
         SabanaPayroll sa1 = new SabanaPayroll();
         BankAccount b1;
         Checking c1 = new Checking();
@@ -199,14 +200,14 @@ public class SabanaNominaTest
         Assertions.assertEquals(13000,sa1.calculateAllEmployeeBalance());
     }
     @Test
-    public void shouldAssigneFamilyCompensaiton() throws FamilyCompensationFundException {
+    public void shouldAssigneFamilyCompensaiton() throws FamilyCompensationFundException, BankAccountException {
         SabanaPayroll sa1 = new SabanaPayroll();
         BankAccount b1;
         Checking c1 = new Checking();
         Savings s1 = new Savings();
         Department d1 = new Department("Surtifruver",UUID.randomUUID());
         EmployeeBySalary e1 = new EmployeeBySalary("AAAAAAAAAAAGUACATE","PA HOY",d1,10,c1=new Checking());
-        EmployeeByHours e2 = new EmployeeByHours("PIÑA","MIA",d1,10,s1);
+        EmployeeByComission e2 = new EmployeeByComission("PIÑA","MIA",d1,10,s1);
         EmployeeByHours e3 = new EmployeeByHours("MIA","KHALIFA",d1,10,s1);
         departments.add(d1);
         employees.add(e1);
@@ -218,7 +219,7 @@ public class SabanaNominaTest
         s1.deposit(10000);
         assertTrue(sa1.assigneFamilyCompensation("ColsubsidioFund",e1.getId()));
         assertTrue(sa1.assigneFamilyCompensation("CompensarFund",e2.getId()));
-        assertTrue(sa1.assigneFamilyCompensation("CafamFund",e3.getId()));
+        assertTrue(sa1.assigneFamilyCompensation("CafamFund",e2.getId()));
 
     }
 

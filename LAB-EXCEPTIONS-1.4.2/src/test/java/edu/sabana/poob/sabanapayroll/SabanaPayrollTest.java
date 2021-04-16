@@ -38,7 +38,7 @@ public class SabanaPayrollTest {
         employees = new ArrayList<>();
         employees.add(employeeBySalary);
         employees.add(employeeByHours);
-        employees.add(employeeByCommission);
+
 
         departments= new ArrayList<>();
         departments.add(department);

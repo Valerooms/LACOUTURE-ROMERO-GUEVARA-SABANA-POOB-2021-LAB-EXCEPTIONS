@@ -10,10 +10,14 @@ public class Rectangle extends Shape implements GeometricShape2D{
     }
 
     public Rectangle (double width, double length) throws ShapeException {
+        this.width=width;
+        this.length=length;
+
         if( width<=0|| length<=0){
             throw new ShapeException(ShapeException.BAD_DIMENSION_SIDE);
 
         }
+
     }
 
     public Rectangle(String color, double width, double length) {
@@ -36,7 +40,7 @@ public class Rectangle extends Shape implements GeometricShape2D{
 
     public double getPerimeter(){
 
-        return 2*width+2*length;
+        return (2*width)+(2*length);
     }
 
     @Override

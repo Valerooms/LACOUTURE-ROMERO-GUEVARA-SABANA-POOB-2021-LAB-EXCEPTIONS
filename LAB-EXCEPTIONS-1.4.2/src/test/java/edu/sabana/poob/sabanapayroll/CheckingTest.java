@@ -16,7 +16,7 @@ public class CheckingTest {
     }
 
     @Test
-    public void shouldDepositAmount() {
+    public void shouldDepositAmount() throws BankAccountException {
         Checking account = new Checking();
         boolean result = account.deposit(10000);
 
@@ -25,11 +25,14 @@ public class CheckingTest {
     }
 
     @Test
-    public void shouldNotDepositAmount() {
+    public void shouldNotDepositAmount() throws BankAccountException {
         Checking account = new Checking();
 
-        assertFalse(account.deposit(4000));
-        assertFalse(account.deposit(5000));
+        Exception e =assertThrows(BankAccountException.class,()-> account.deposit(4000));
+        assertEquals(BankAccountException.DINERO_INSUFICIENTE, e.getMessage());
+        Exception e1 =assertThrows(BankAccountException.class,()-> account.deposit(5000));
+        assertEquals(BankAccountException.DINERO_INSUFICIENTE, e.getMessage());
+
         assertTrue(Double.compare(0, account.getBalance()) == 0);
     }
 
@@ -53,12 +56,14 @@ public class CheckingTest {
     }
 
     @Test
-    public void shouldKeepBalance() {
+    public void shouldKeepBalance() throws BankAccountException {
         Checking account = new Checking();
 
         assertTrue(account.deposit(11000)); //6000
-        assertFalse(account.deposit(4000));
-        assertFalse(account.deposit(5000));
+        Exception e =assertThrows(BankAccountException.class,()-> account.deposit(4000));
+        assertEquals(BankAccountException.DINERO_INSUFICIENTE, e.getMessage());
+        Exception e1 =assertThrows(BankAccountException.class,()-> account.deposit(5000));
+        assertEquals(BankAccountException.DINERO_INSUFICIENTE, e.getMessage());
         assertTrue(account.deposit(21000)); // 16000
 
         assertTrue(account.processCheck(new Check(15000, LocalDate.now().plusMonths(1)))); // 10000
